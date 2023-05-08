@@ -1,0 +1,99 @@
+<!-- show response message after submit add bill  form  -->
+
+<app-loading-spinner *ngIf="submitted; else resulte"></app-loading-spinner>
+<ng-template #resulte>
+  <div class="responseMessage" *ngIf="responseMessage">
+    <div
+      [ngClass]="{
+        succeeded: succeeded
+      }"
+    >
+      {{ responseMessage }}
+    </div>
+  </div>
+</ng-template>
+
+<!-- Add bill form  -->
+<form [formGroup]="billForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>payId:</label>
+    <input type="text" formControlName="payId" />
+  </div>
+  <div class="form-group">
+    <label>Customer Name:</label>
+    <input type="text" formControlName="customerName" required minlength="1" />
+    <!-- check input form validation  -->
+    <div *ngIf="submitted && form['customerName'].errors" class="error-message">
+      <div *ngIf="form['customerName'].errors['required']">
+        customer Name is required
+      </div>
+      <div *ngIf="form['customerName'].errors['minLength']">
+        customer Name minLength is 1
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Due Date:</label>
+    <input
+      type="datetime-local"
+      formControlName="dueDate"
+      required
+      minlength="1"
+    />
+    <div *ngIf="submitted && form['dueDate'].errors" class="error-message">
+      <div *ngIf="form['dueDate'].errors['required']">dueDate is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Client Type:</label>
+    <input type="number" formControlName="clientType" required />
+    <div *ngIf="submitted && form['clientType'].errors" class="error-message">
+      <div *ngIf="form['clientType'].errors['required']">
+        client Type is required
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Phone Number:</label>
+    <input type="text" formControlName="phoneNumber" required minlength="1" />
+    <div *ngIf="submitted && form['phoneNumber'].errors" class="error-message">
+      <div *ngIf="form['phoneNumber'].errors['required']">
+        phone Number is required
+      </div>
+      <div *ngIf="form['phoneNumber'].errors['minLength']">
+        phone Number minLength is 1
+      </div>
+      <div *ngIf="form['phoneNumber'].errors['pattern']">
+        phone Number is invalid
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>amount:</label>
+    <input
+      type="number"
+      formControlName="amount"
+      min="251"
+      required
+      minlength="1"
+    />
+    <div *ngIf="submitted && form['amount'].errors" class="error-message">
+      <div *ngIf="form['amount'].errors['required']">amount is required</div>
+      <div *ngIf="form['amount'].errors['minLength']">
+        amount minLength is 1
+      </div>
+      <div *ngIf="form['amount'].errors['min']">minimum amount is 251</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>note:</label>
+    <input type="text" formControlName="note" />
+    <div
+      class="error-message"
+      *ngIf="form['amount'].invalid && form['amount'].touched"
+    >
+      amount is invalid
+    </div>
+  </div>
+  <button type="submit " class="submit">AddBill</button>
+</form>

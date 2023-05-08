@@ -1,0 +1,116 @@
+/* You can add global styles to this file, and also import other style files */
+$mainColor: #6d34b1;
+// body backqround color
+body {
+  background: rgb(0 0 0 / 6%);
+  margin: 0;
+}
+@mixin actionButton {
+  padding: 5px;
+  border: 1px solid #7b4cb229;
+  border-radius: 3px;
+  &:hover {
+    background-color: $mainColor;
+    color: white;
+  }
+}
+// style of search results table
+.search-result {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  table {
+    width: 100%;
+    border: 1px solid #00000047;
+    border-radius: 9px;
+    background-color: white;
+    th {
+      color: $mainColor;
+    }
+    th,
+    td {
+      padding: 9px 0;
+      border-bottom: 1px solid #00000047;
+    }
+    thead {
+      background: rgb(0 0 0 / 16%);
+    }
+  }
+  .pagination {
+    padding: 12px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    button {
+      @include actionButton;
+    }
+  }
+}
+// style of addbill
+.actionbutton {
+  @include actionButton;
+}
+.error-message {
+  color: #c92323;
+  font-weight: normal;
+}
+//  style of filter forms
+.form {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background: #230645eb;
+  color: whitesmoke;
+  padding: 10px 0;
+  margin-bottom: 12px;
+
+  .form-group {
+    margin-bottom: 3%;
+  }
+  .form-control {
+    padding: 6px;
+    display: block;
+    border: 1px solid #b2abab63;
+    border-radius: 6px;
+  }
+  .dategroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+// modal style
+.modal {
+  position: absolute;
+  top: 1%;
+  left: 24%;
+  width: 50%;
+  background: rgb(128 150 186);
+  font-weight: 900;
+  box-shadow: 1px 1px 13px #0000007d;
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 17px;
+    color: $mainColor;
+    .close {
+      background: none;
+      border: none;
+      color: #a70b0b;
+      font-size: larger;
+    }
+  }
+}
+.logout {
+  background: black;
+  padding: 4px 26px;
+}
+button {
+  cursor: pointer;
+}

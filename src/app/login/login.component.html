@@ -1,0 +1,49 @@
+<div class="container">
+  <h1>Login Billing System</h1>
+  <div class="form-container">
+    <app-loading-spinner *ngIf="submitted"></app-loading-spinner>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="responseMessage" class="text-center mb-3">
+        {{ responseMessage }}
+      </div>
+      <!-- new div to display response message -->
+      <div class="form-group">
+        <label for="userName">Email</label>
+        <input
+          type="email"
+          formControlName="userName"
+          class="form-control"
+          [ngClass]="{
+            'error-message':
+              form['userName'].touched && form['userName'].invalid
+          }"
+        />
+        <div
+          *ngIf="form['userName'].touched && form['userName'].invalid"
+          class="text-danger error-message"
+        >
+          Invalid email address
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [ngClass]="{
+            'error-message':
+              form['password'].touched && form['password'].invalid
+          }"
+        />
+        <div
+          *ngIf="form['password'].touched && form['password'].invalid"
+          class="text-danger error-message"
+        >
+          Password is required
+        </div>
+      </div>
+      <button type="submit " class="submit-btn">Login</button>
+    </form>
+  </div>
+</div>

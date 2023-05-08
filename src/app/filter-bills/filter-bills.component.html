@@ -1,0 +1,231 @@
+<div class="logout">
+  <app-logout></app-logout>
+</div>
+
+<!-- filter form  -->
+<div class="">
+  <form [formGroup]="filterForm">
+    <div class="form">
+      <div class="form-group">
+        <label for="payId">PayId</label>
+        <input type="text" formControlName="payId" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="serviceId">ServiceId</label>
+        <input
+          type="text"
+          formControlName="serviceId"
+          class="form-control"
+          [ngClass]="{
+            'error-message':
+              form['serviceId'].touched && form['serviceId'].errors
+          }"
+        />
+
+        <div
+          *ngIf="submitted && form['serviceId'].errors"
+          class="error-message"
+        >
+          <div *ngIf="form['serviceId'].errors['pattern']">
+            In valid service id
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" formControlName="phoneNumber" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label for="customerName">Customer Name</label>
+        <input
+          type="text"
+          formControlName="customerName"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="note">Note</label>
+        <input type="text" formControlName="note" class="form-control" />
+      </div>
+      <div class="dategroup">
+        <div class="form-group">
+          <label for="startCreateDate">Start Create Date</label>
+          <input
+            type="datetime-local"
+            formControlName="startCreateDate"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="endCreateDate">End Create Date</label>
+          <input
+            type="datetime-local"
+            formControlName="endCreateDate"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="startDueDate">Start Due Date</label>
+          <input
+            type="datetime-local"
+            formControlName="startDueDate"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="endDueDate">End Due Date</label>
+          <input
+            type="datetime-local"
+            formControlName="endDueDate"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="startPayDate">Start Pay Date</label>
+          <input
+            type="datetime-local"
+            formControlName="startPayDate"
+            class="form-control"
+          />
+        </div>
+        <div class="form-group">
+          <label for="endPayDate">End Pay Date</label>
+          <input
+            type="datetime-local"
+            formControlName="endPayDate"
+            class="form-control"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Bill Status</label>
+        <select formControlName="status" class="form-control">
+          <optgroup>
+            <option
+              *ngFor="let item of billStatus; let i = index"
+              [ngValue]="i + 1"
+            >
+              {{ item }}
+            </option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="orderByColumn">Order By Column</label>
+        <select formControlName="orderByColumn" class="form-control">
+          <option [ngValue]="0">payDate</option>
+          <option [ngValue]="1">DueDate</option>
+          <option [ngValue]="3">createDate</option>
+          <option [ngValue]="4">BillStatus</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="orderByType">Order By Type</label>
+        <select formControlName="orderByType" class="form-control">
+          <option [ngValue]="0">Asc</option>
+          <option [ngValue]="1">Desc</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pageNumber">Page Number</label>
+        <input
+          type="number"
+          formControlName="pageNumber"
+          class="form-control"
+        />
+      </div>
+      <div class="form-group">
+        <label for="pageSize">Page Size</label>
+        <input type="number" formControlName="pageSize" class="form-control" />
+      </div>
+    </div>
+  </form>
+</div>
+<!--  show loading spinner when filter request is sent  -->
+<app-loading-spinner *ngIf="submitted; else resulte"></app-loading-spinner>
+<!-- show filter resulte  -->
+<ng-template #resulte>
+  <div class="search-result">
+    <ng-container *ngIf="results.length > 0; else elseBlock">
+      <table>
+        <thead>
+          <tr>
+            <th>Pay ID</th>
+            <th>Phone Number</th>
+            <th>Customer Name</th>
+            <th>Service</th>
+            <th>Due Date</th>
+            <th>Pay Date</th>
+            <th>Status</th>
+            <th>Amount</th>
+            <th>Note</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of results">
+            <td>{{ item.payId }}</td>
+            <td>{{ item.phoneNumber }}</td>
+            <td>{{ item.customerName }}</td>
+            <td>{{ item.service.name }}</td>
+            <td>{{ item.dueDate | date }}</td>
+            <td>{{ item.payDate | date }}</td>
+            <td>
+              <span *ngFor="let s of billStatus; let i = index">
+                <span *ngIf="item.status == i + 1">{{ s }}</span>
+              </span>
+            </td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.note }}</td>
+            <td>
+              <button (click)="openModal(item.payments)">show payment</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <button class="prev" *ngIf="hasPreviousPage" (click)="Previous()">
+          Previous
+        </button>
+        <button class="next" *ngIf="hasNextPage" (click)="next()">Next</button>
+      </div>
+    </ng-container>
+    <ng-template #elseBlock>
+      <div class="empty">No service</div>
+    </ng-template>
+  </div>
+</ng-template>
+<!-- payments modal -->
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-header">
+    <h3>payment</h3>
+    <button class="close" (click)="closeModal()">X</button>
+  </div>
+  <div class="modal-body">
+    <div class="search-result">
+      <ng-container *ngIf="payment.length > 0; else noPayment">
+        <table>
+          <thead>
+            <tr>
+              <th>payDate</th>
+              <th>Amount</th>
+              <th>payment Methode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of payment">
+              <td>{{ item.payDate | date }}</td>
+              <td>{{ item.amount }}</td>
+              <td>{{ item.paymentMethod }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-template #noPayment>
+        <div class="empty">No Payments</div>
+      </ng-template>
+    </div>
+  </div>
+</div>
