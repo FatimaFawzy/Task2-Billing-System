@@ -1,0 +1,22 @@
+$mainColor: #6d34b1;
+
+.form {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.form-group {
+  margin: 1% 0px;
+}
+.form-control {
+  padding: 6px;
+  display: block;
+  border: 1px solid #b2abab63;
+  border-radius: 6px;
+  margin: 8px 0;
+}
+
+a {
+  text-decoration: none;
+}
