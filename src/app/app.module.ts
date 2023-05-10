@@ -13,6 +13,7 @@ import { AddBillFormComponent } from './add-bill-form/add-bill-form.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { LogoutComponent } from './logout/logout.component';
 import { FiterFormComponent } from './filter-services/fiter-form/fiter-form.component';
+import { FilterResultComponent } from './filter-services/filter-result/filter-result.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FiterFormComponent } from './filter-services/fiter-form/fiter-form.comp
     LoadingSpinnerComponent,
     LogoutComponent,
     FiterFormComponent,
+    FilterResultComponent,
 
 
   ],

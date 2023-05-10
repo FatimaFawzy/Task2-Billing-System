@@ -1,0 +1,58 @@
+
+  <div class="search-result">
+    <ng-container *ngIf="results.length > 0; else elseBlock">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Note</th>
+            <th>Create Date</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of results">
+            <td>{{ item.name }}</td>
+            <td>{{ item.note }}</td>
+            <td>{{ item.createDate | date }}</td>
+            <td>
+              <ng-container *ngIf="item.isActive; else inactive"
+                >Active</ng-container
+              >
+              <ng-template #inactive>Inactive></ng-template>
+            </td>
+            <td>
+              <a [routerLink]="['/FilterBills', item.id]">FilterBills</a>
+            </td>
+            <td>
+              <button (click)="openModal(item.id)" class="actionbutton">
+                AddBill
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <button class="prev" *ngIf="hasPreviousPage" (click)="PreviousPage()">
+          Previous
+        </button>
+        <button class="next" *ngIf="hasNextPage" (click)="nextPage()">Next</button>
+      </div>
+    </ng-container>
+    <ng-template #elseBlock>
+      <div class="empty">No service</div>
+    </ng-template>
+  </div>
+
+<!-- AddBull Model -->
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-header">
+    <h3>Add Bill</h3>
+    <button class="close" (click)="closeModal()">X</button>
+  </div>
+  <div class="modal-body">
+    <app-add-bill-form [serviceId]="serviceId"></app-add-bill-form>
+  </div>
+</div>

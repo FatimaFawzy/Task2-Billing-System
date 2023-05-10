@@ -63,22 +63,15 @@ export class FilterServicesComponent implements OnInit {
       );
   }
 
-  openModal(id: any) {
-    this.isModalOpen = true;
-    this.serviceId = id;
-  }
 
-  closeModal() {
-    this.isModalOpen = false;
-  }
   Previous() {
-
+  console.log('preve from out');
   this.filterForm.pageNumber--;
     this.applyFilter(this.filterForm);
   }
   next() {
-
-   this.filterForm.pageNumber++;
+    console.log('next');
+    this.filterForm.pageNumber++;
     this.applyFilter(this.filterForm);
   }
 }
